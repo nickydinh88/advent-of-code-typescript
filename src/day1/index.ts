@@ -5,28 +5,19 @@ const input = parseInput(path.join(__dirname, "input.txt"), ({ split: { mapper: 
 
 
 // function extract digits and join the first and last digits to form a number
-function extractAndJoinDigits(inputString: string) {
-  let firstDigit = '';
-  let lastDigit = '';
+function extractAndJoinDigits(inputString: string) : number {
+  // Using regular expression to extract digits
+  let digits = inputString.match(/\d/g);
 
-  // Finding the first digit
-  for (let i = 0; i < inputString.length; i++) {
-    if (!isNaN(parseInt(inputString[i]))) {
-      firstDigit = inputString[i];
-      break;
-    }
+  if (digits) {
+    // Extracting first and last digits
+    let firstDigit = digits[0];
+    let lastDigit = digits[digits.length - 1];
+
+    return Number(firstDigit + lastDigit) ;
+  } else {
+    return 0;
   }
-
-  // Finding the last digit
-  for (let i = inputString.length - 1; i >= 0; i--) {
-    if (!isNaN(parseInt(inputString[i]))) {
-      lastDigit = inputString[i];
-      break;
-    }
-  }
-
-  // Joining the first and last digits to form a number
-  return parseInt(firstDigit + lastDigit);
 }
 
 
