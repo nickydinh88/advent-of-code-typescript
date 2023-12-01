@@ -44,3 +44,30 @@ export function parseInput<T>(path: string, {
     ? splitted
     : splitted.map((...args) => mapper?.(...args) ?? Number(args[0]));
 }
+
+// replace multiple strings with multiple other string
+function replaceByArray(inputString: string, replacements: Record<string, string>): string {
+  const regex = new RegExp(`${Object.keys(replacements).join("|")}`, "gi");
+
+  return inputString.replace(regex, function(match) {
+    return replacements[match.toLowerCase()] + match.charAt(match.length - 1);;
+  });
+}
+
+export function replaceWordWithNumber(inputString: string) {
+  const replacements = {
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9",
+  };
+
+  const resolvedOverlapString = replaceByArray(inputString, replacements)
+
+  return replaceByArray(resolvedOverlapString, replacements);
+}
