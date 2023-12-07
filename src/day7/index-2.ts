@@ -16,9 +16,35 @@ const hands = input.map(handString => {
   return { hand, bid: parseInt(bid) };
 });
 
-const stringOrder = '23456789TJQKA'
+const stringOrder = 'J23456789TQKA'
 
-const getHandRank = (hand) => {
+function convertHand (hand) {
+  let counts = {};
+
+  for(let i = 0; i < hand.length; i++) {
+      let char = hand[i];
+      if(char !== 'J') {
+          counts[char] = (counts[char] || 0) + 1;
+      }
+  }
+
+  let maxChar 
+
+  try{
+     maxChar = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+ } catch (e) {
+    console.log(hand);
+}
+  
+  hand = hand.replace(/J/g, maxChar);
+  return hand
+}
+
+const getHandRank = (str) => {
+  const hand = str === 'JJJJJ' ? str : convertHand(str);
+
+  console.log(str, hand);
+
   const handSet = {};
   for (let i = 0; i < hand.length; i++) {
     handSet[hand[i]] = handSet[hand[i]] || 0;
@@ -28,7 +54,10 @@ const getHandRank = (hand) => {
   let hasPair = false;
   let hasThreeOfAKind = false;
   for (let key in handSet) {
+    
     const val = handSet[key];
+    // console.log(val);
+    // console.log(key);
     if (val === 5) {
       return 7; // Five of a kind
     } else if (val === 4) {
@@ -54,8 +83,6 @@ hands.forEach(hand => {
 });
 
 
-console.log(hands);
-
 hands.sort((a, b) => {
   if(a.rank === b.rank) {
     // id rank is the same, sort by the a.hand and b.hand
@@ -76,6 +103,8 @@ hands.sort((a, b) => {
   }
   return  a.rank - b.rank;
 })
+
+console.log((hands));
 
 
 function calculateWinningAmount(hands) {
