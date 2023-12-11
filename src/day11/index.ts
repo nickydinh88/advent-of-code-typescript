@@ -12,7 +12,7 @@ function main() {
 
 export default main();
 
-export function solve(input: string): number {
+export function part1(input: string): number {
   const { moves, map } = parse(input)
   return countSteps('AAA', moves, map)
 }
@@ -35,7 +35,7 @@ export function parse(): { moves: string[]; map: Map<string, string[]> } {
   return { moves, map }
 }
 
-export function solve2(input: string): number {
+export function part2(input: string): number {
   const { moves, map } = parse(input)
   return [...map.keys()].filter(k => k.endsWith('A'))
       .map(p => countSteps(p, moves, map))
@@ -50,4 +50,4 @@ export function greatestCommonDivisor(a: number, b: number): number {
   return !b ? a : greatestCommonDivisor(b, a % b);
 }
 
-console.log(solve2())
+console.log(part2())
